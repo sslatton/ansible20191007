@@ -1,0 +1,19 @@
+---
+- name: Our first playbook
+  hosts: raiders
+  gather_facts: yes  # this is a default but we set it as a reminder to talk about
+                     # this is also called setup module or setup.py
+  tasks:
+    - name: Manage some applications with apt
+      # name: Install an application with apt
+      apt:
+        # state: present
+        # state: absent
+        state: "{{ lenny }}"
+        name: [sl, bastet, ninvaders]
+        # another way to write the list is shown below
+        #  - sl
+        #  - bastet
+        #  - ninvaders
+
+      become: yes
