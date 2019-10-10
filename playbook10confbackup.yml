@@ -1,0 +1,33 @@
+---
+- name: Playbook to harvest and backup config
+  hosts: eosswitches
+  gather_facts: yes
+  connection: network_cli
+
+  tasks:
+          - name: gather facts on eos switch
+            eos_facts:
+                    gather_subset: all
+            become: yes
+
+          - name: create a directory for backing up configs
+            file:
+                    path: ~/ans/backup/
+                    state: directory
+
+          - name: what the heck is in ansible_facts
+            debug:
+                    var: ansible_facts
+                    verbosity: 1
+
+          - name: Use copy to evac info from playbook to controller
+            copy:
+                    dest: "~/ans/backup/{{ inventory_hostname }}.bkup"
+                    content: "{{ ansible_facts.net_config }}"
+
+          - name: Archive (gzip) the files in the backup directory
+            archive:
+                    dest: "~/ans/backup/{{ inventory_hostname }}-{{ ansible_date_time.iso8601_basic }}.bkup.gz"
+                    path: "~/ans/backup/{{ inventory_hostname }}.bkup"
+                    remove: yes
+

@@ -1,0 +1,9 @@
+[eosswitches]
+napya-476-sw1
+napya-476-sw2
+
+[eosswitches:vars]
+ansible_network_os=eos
+ansible_become_method=enable
+ansible_user=admin
+ansible_ssh_pass=alta3

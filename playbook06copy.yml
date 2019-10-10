@@ -1,0 +1,32 @@
+---
+- name: The magic of the copy module
+  hosts: planetexpress
+  gather_facts: yes
+
+  tasks:
+          ## When running in "normal" connection mode (SSH)
+          ## by default: copy moves a file FROM controller TO remote hosts
+          - name: Copy Fry's resume to hosts
+            copy:
+                    src: ~/ans/files/fryresume.txt       #<-- on the controller
+                    dest: ~/fryresume.txt                #<-- on the remote host
+
+- name: Copy module as run in localhost mode
+  hosts: localhost
+  gather_facts: yes
+
+  tasks:
+          - name: Create output directory
+            file:
+                    state: directory
+                    path: ~/ans/output/
+
+          - name: Copy Fry's resume from location A on controller to location B
+            copy:
+                    src: ~/ans/files/fryresume.txt
+                    dest: ~/ans/files/fryresume.txt.moved
+          - name: Copy out content to a local file
+            copy:
+                    dest: ~/ans/output/example.txt
+                    content: "Can I really make an content I want appear in example.txt?"
+...

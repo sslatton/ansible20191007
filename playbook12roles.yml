@@ -1,0 +1,8 @@
+---
+- name: Calling my custom role
+  hosts: eosswitches
+  gather_facts: yes
+  connection: network_cli
+
+  roles:
+          - eosbkupcfg

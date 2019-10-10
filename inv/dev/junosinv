@@ -1,0 +1,6 @@
+[JuniperSwitchesWest]
+js1 ansible_host=10.10.2.2 ansible_port=1001
+js2 ansible_host=10.11.2.2 ansible_port=1002
+
+[JuniperSwitchesWest:vars]
+hostpass=qwerty123

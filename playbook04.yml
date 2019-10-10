@@ -1,0 +1,37 @@
+---
+- name: Bootstrap and loop new users
+  hosts: planetexpress:!farnsworth
+  gather_facts: yes
+
+  pre_tasks:
+          - name: "Update Apt"
+            raw: "apt update -y"
+            become: yes
+
+          - name: "Bootstrap Python and install"
+            raw: "apt install -y python3-pip"
+            become: yes
+          
+  tasks:        
+          - name: Create a new group omicronxii
+            group:
+                    name: omicronxii
+                    state: present
+            become: yes
+
+          - name: Add some users to the new group
+            user:
+                    name: "{{ item }}"
+                    comment: "Throw away users for testing"
+                    state: present
+                    shell: /bin/bash
+                    system: no
+                    createhome: yes
+                    group: omicronxii
+            loop:
+                    - Lela
+                    - Clamps
+                    - ZappBrannigan
+                    - Kif
+            become: yes
+...

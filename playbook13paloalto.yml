@@ -1,0 +1,22 @@
+---
+- name: Our first Palo Alto playbook
+  hosts: localhost
+  gather_facts: yes
+  connection: local
+
+  vars_files:
+          - ~/panoscreds.yml
+  
+  roles:
+          - paloaltonetworks.paloaltonetworks
+  
+  tasks:
+          - name: Collect PanOS facts
+            panos_facts:
+                    provider: "{{ provider }}"
+                    gather_subset: ["config"]
+            register: result
+
+          - name: What is in panos_facts
+            debug:
+                    var: result
